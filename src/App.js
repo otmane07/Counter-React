@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+// toute fois tu vois que jsx ne fonctionne pas import Reat
+import CounterClass from "./Components/CounterClass"
+import CounterHooks from "./Components/CounterHooks";
 
+export const themeContext = React.createContext();
 function App() {
+    const [defaultTheme,setDefaultTheme] = useState("green")
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <>
+      <themeContext.Provider value={defaultTheme}>
+        <CounterClass counterInit={1} />
+        <CounterHooks counterInit={0} />
+      </themeContext.Provider>
+      <button onClick={()=>{
+          setDefaultTheme(
+              (prevState)=> {
+                  return prevState === "green" ? "red":"green";
+              }
+          )
+      }
+      }>
+          Toggle default Theme
+      </button>
+      </>
+  )
 }
 
 export default App;
